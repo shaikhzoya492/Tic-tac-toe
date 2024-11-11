@@ -1,0 +1,240 @@
+<pre style='text-align: left; border: 1px dashed #008DEF; line-height: 18px; padding: 15px; font-size: 13px; font-family:'Courier New', Courier, monospace; overflow: auto;'><span style='font-weight:bold;color:#7B0052;'>import</span> java.awt.*;
+<span style='font-weight:bold;color:#7B0052;'>import</span> java.awt.event.*;
+<span style='font-weight:bold;color:#7B0052;'>import</span> java.util.*;
+<span style='font-weight:bold;color:#7B0052;'>import</span> java.util.logging.Level;
+<span style='font-weight:bold;color:#7B0052;'>import</span> java.util.logging.Logger;
+<span style='font-weight:bold;color:#7B0052;'>import</span> javax.swing.*;
+
+<span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>class</span> TicTacToe  <span style='font-weight:bold;color:#7B0052;'>implements</span> ActionListener <span style='font-weight:bold;color:#D3171B'>{</span>
+    Random random=<span style='font-weight:bold;color:#7B0052;'>new</span> Random();
+    JFrame jf1=<span style='font-weight:bold;color:#7B0052;'>new</span> JFrame();
+    JPanel p1=<span style='font-weight:bold;color:#7B0052;'>new</span> JPanel();
+    JPanel p2=<span style='font-weight:bold;color:#7B0052;'>new</span> JPanel();
+    JLabel l1=<span style='font-weight:bold;color:#7B0052;'>new</span> JLabel();
+    JButton[] b1=<span style='font-weight:bold;color:#7B0052;'>new</span> JButton[9];
+    <span style='font-weight:bold;color:#7B0052;'>boolean</span> player1_turn;
+    
+    TicTacToe()<span style='font-weight:bold;color:#D3171B'>{</span>
+        jf1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf1.setSize(600,600);
+        jf1.setLocation(350,100);
+        jf1.setVisible(<span style='font-weight:bold;color:#7B0052;'>true</span>);
+        
+        l1.setHorizontalAlignment(JLabel.CENTER);
+        l1.setText(<span style='color:#2A00FF'>"Tic-Tac-Toe"</span>);
+        l1.setFont(<span style='font-weight:bold;color:#7B0052;'>new</span> Font(<span style='color:#2A00FF'>"Ink Free"</span>,Font.BOLD,72));
+        
+        p1.setLayout(<span style='font-weight:bold;color:#7B0052;'>new</span> BorderLayout());
+        p1.setBounds(0,0,800,100);
+        p2.setLayout(<span style='font-weight:bold;color:#7B0052;'>new</span> GridLayout(3,3));
+        
+        <span style='font-weight:bold;color:#7B0052;'>for</span>(<span style='font-weight:bold;color:#7B0052;'>int</span> i=0;i&lt;9;i++)<span style='font-weight:bold;color:#D3171B'>{</span>
+            b1[i]=<span style='font-weight:bold;color:#7B0052;'>new</span> JButton();
+            p2.add(b1[i]);
+            b1[i].setFont(<span style='font-weight:bold;color:#7B0052;'>new</span> Font(<span style='color:#2A00FF'>""</span>,Font.BOLD,120));
+            b1[i].addActionListener(<span style='font-weight:bold;color:#7B0052;'>this</span>);
+            
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        
+        p1.add(l1);
+        jf1.add(p1,BorderLayout.NORTH);
+        jf1.add(p2);
+        
+    <span style='font-weight:bold;color:#D3171B'>}</span>
+    
+    <span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>void</span> firstTurn()<span style='font-weight:bold;color:#D3171B'>{</span>
+        <span style='font-weight:bold;color:#7B0052;'>try</span> <span style='font-weight:bold;color:#D3171B'>{</span>
+            Thread.sleep(2000);
+        <span style='font-weight:bold;color:#D3171B'>}</span> <span style='font-weight:bold;color:#7B0052;'>catch</span> (InterruptedException ex) <span style='font-weight:bold;color:#D3171B'>{</span>
+            Logger.getLogger(TicTacToe.class.getName()).log(Level.SEVERE, null, ex);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        
+        <span style='font-weight:bold;color:#7B0052;'>if</span>(random.nextInt(2)==0)<span style='font-weight:bold;color:#D3171B'>{</span>
+            player1_turn=<span style='font-weight:bold;color:#7B0052;'>true</span>;
+            l1.setText(<span style='color:#2A00FF'>"X turn"</span>);
+            
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        <span style='font-weight:bold;color:#7B0052;'>else</span><span style='font-weight:bold;color:#D3171B'>{</span>
+             player1_turn=<span style='font-weight:bold;color:#7B0052;'>false</span>;
+            l1.setText(<span style='color:#2A00FF'>"O turn"</span>);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        
+    <span style='font-weight:bold;color:#D3171B'>}</span>
+    <span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>void</span> check()<span style='font-weight:bold;color:#D3171B'>{</span>
+        <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[0].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[1].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[2].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(0,1,2);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+         <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[3].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[5].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(3,4,5);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+          <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[6].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[7].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[8].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(6,7,8);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+           <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[0].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[3].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[6].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(0,3,6);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+            <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[1].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[7].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(1,4,7);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+             <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[2].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[5].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[8].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(2,5,8);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+              <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[0].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[8].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(0,4,8);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+               <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[2].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"X"</span>)&&
+                (b1[6].getText() ==<span style='color:#2A00FF'>"X"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            xwins(2,4,6);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+               
+               
+               
+               
+               
+               
+               
+               <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[0].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[1].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[2].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(0,1,2);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+         <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[3].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[5].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(3,4,5);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+          <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[6].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[7].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[8].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(6,7,8);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+           <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[0].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[3].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[6].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(0,3,6);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+            <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[1].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[7].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(1,4,7);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+             <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[2].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[5].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[8].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(2,5,8);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+              <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[0].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[8].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(0,4,8);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+               <span style='font-weight:bold;color:#7B0052;'>if</span>(
+                (b1[2].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[4].getText() ==<span style='color:#2A00FF'>"O"</span>)&&
+                (b1[6].getText() ==<span style='color:#2A00FF'>"O"</span>)
+                )<span style='font-weight:bold;color:#D3171B'>{</span>
+            owins(2,4,6);
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        
+    <span style='font-weight:bold;color:#D3171B'>}</span>
+    <span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>void</span> xwins(<span style='font-weight:bold;color:#7B0052;'>int</span> a,int b,int c)<span style='font-weight:bold;color:#D3171B'>{</span>
+        b1[a].setBackground(Color.green);
+        b1[b].setBackground(Color.green);
+        b1[c].setBackground(Color.green);
+        
+        <span style='font-weight:bold;color:#7B0052;'>for</span>(<span style='font-weight:bold;color:#7B0052;'>int</span> i=0;i&lt;9;i++)<span style='font-weight:bold;color:#D3171B'>{</span>
+            b1[i].setEnabled(<span style='font-weight:bold;color:#7B0052;'>false</span>);
+            
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        l1.setText(<span style='color:#2A00FF'>"X Wins"</span>);
+    <span style='font-weight:bold;color:#D3171B'>}</span>
+    <span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>void</span> owins(<span style='font-weight:bold;color:#7B0052;'>int</span> a,int b,int c)<span style='font-weight:bold;color:#D3171B'>{</span>
+        b1[a].setBackground(Color.green);
+        b1[b].setBackground(Color.green);
+        b1[c].setBackground(Color.green);
+        
+        <span style='font-weight:bold;color:#7B0052;'>for</span>(<span style='font-weight:bold;color:#7B0052;'>int</span> i=0;i&lt;9;i++)<span style='font-weight:bold;color:#D3171B'>{</span>
+            b1[i].setEnabled(<span style='font-weight:bold;color:#7B0052;'>false</span>);
+            
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+        l1.setText(<span style='color:#2A00FF'>"O Wins"</span>);
+        
+    <span style='font-weight:bold;color:#D3171B'>}</span>
+
+<span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>static</span> <span style='font-weight:bold;color:#7B0052;'>void</span> main(String[] args) 
+    <span style='font-weight:bold;color:#D3171B'>{</span>
+      TicTacToe obj=<span style='font-weight:bold;color:#7B0052;'>new</span> TicTacToe();
+     
+    
+<span style='font-weight:bold;color:#D3171B'>}</span>
+<span style='font-weight:bold;color:#7B0052;'>public</span> <span style='font-weight:bold;color:#7B0052;'>void</span>  actionPerformed(ActionEvent e)
+    <span style='font-weight:bold;color:#D3171B'>{</span>
+        <span style='font-weight:bold;color:#7B0052;'>for</span>(<span style='font-weight:bold;color:#7B0052;'>int</span> i=0;i&lt;9;i++)<span style='font-weight:bold;color:#D3171B'>{</span>
+            <span style='font-weight:bold;color:#7B0052;'>if</span>(e.getSource()==b1[i])<span style='font-weight:bold;color:#D3171B'>{</span>
+                <span style='font-weight:bold;color:#7B0052;'>if</span>(player1_turn)<span style='font-weight:bold;color:#D3171B'>{</span>
+                    <span style='font-weight:bold;color:#7B0052;'>if</span>(b1[i].getText()==<span style='color:#2A00FF'>""</span>)<span style='font-weight:bold;color:#D3171B'>{</span>
+                        b1[i].setText(<span style='color:#2A00FF'>"X"</span>);
+                        player1_turn=<span style='font-weight:bold;color:#7B0052;'>false</span>;
+                        l1.setText(<span style='color:#2A00FF'>"O turn"</span>);
+                        check();
+                    <span style='font-weight:bold;color:#D3171B'>}</span>
+                <span style='font-weight:bold;color:#D3171B'>}</span>
+                <span style='font-weight:bold;color:#7B0052;'>else</span><span style='font-weight:bold;color:#D3171B'>{</span>
+                    <span style='font-weight:bold;color:#7B0052;'>if</span>(b1[i].getText()==<span style='color:#2A00FF'>""</span>)<span style='font-weight:bold;color:#D3171B'>{</span>
+                        b1[i].setText(<span style='color:#2A00FF'>"O"</span>);
+                        player1_turn=<span style='font-weight:bold;color:#7B0052;'>true</span>;
+                        l1.setText(<span style='color:#2A00FF'>"X turn"</span>);
+                         check();
+                    <span style='font-weight:bold;color:#D3171B'>}</span>
+                    
+                <span style='font-weight:bold;color:#D3171B'>}</span>
+            <span style='font-weight:bold;color:#D3171B'>}</span>
+        <span style='font-weight:bold;color:#D3171B'>}</span>
+    
+    <span style='font-weight:bold;color:#D3171B'>}</span>
+<span style='font-weight:bold;color:#D3171B'>}</span></pre>
